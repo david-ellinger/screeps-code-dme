@@ -6,6 +6,7 @@ interface CreepMemory {
   room: string;
   working: boolean;
   source: string;
+  building: boolean;
 }
 
 interface Memory {

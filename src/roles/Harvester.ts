@@ -1,4 +1,5 @@
 import { getAvailableSource } from "utils/getAvailableSource";
+import { Builder } from "./Builder";
 
 export class Harvester {
     public static run(creep: Creep) {
@@ -36,6 +37,8 @@ export class Harvester {
             if (creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
             }
+        } else {
+            Builder.transferEnergyToStructure(creep);
         }
     }
 
@@ -43,9 +46,9 @@ export class Harvester {
         if (Game.spawns.Spawn1.room.energyAvailable >= 300) {
             const newName = 'Harvester' + Game.time;
 
-            Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE, WORK, CARRY, MOVE], newName,
+            const retVal = Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], newName,
                 { memory: { role: 'harvester', source: getAvailableSource() } } as any);
-            console.log(`Spawning new harvester: ${newName}.`);
+            console.log(`Spawning new harvester: ${newName} with return value: ${retVal}`);
             ;
         }
     }

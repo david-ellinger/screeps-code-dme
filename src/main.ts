@@ -18,7 +18,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
   console.log('Builders: ' + builders.length);
 
   // BUILD Creeps
-  if (harvesters.length < 5) {
+  if (harvesters.length < 15) {
     Harvester.factory();
   }
   if (builders.length < 3) {
