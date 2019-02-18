@@ -10,6 +10,19 @@ export class SpawnCreeps {
         const constructionCount = StructureHelper.constructionSites(room).length;
         const sourceCount = StructureHelper.sources(room).length;
         const roles = {
+            builder: {
+                count: Math.ceil(constructionCount / 4),
+                tier: {
+                    1: { parts: [WORK, WORK, CARRY, MOVE] },
+                    2: { parts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE] },
+                    3: { parts: [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE] },
+                    4: {
+                        parts: [
+                            WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE
+                        ]
+                    }
+                }
+            },
             hauler: {
                 count: sourceCount,
                 tier: {
@@ -30,12 +43,10 @@ export class SpawnCreeps {
             miner: {
                 count: sourceCount,
                 tier: {
-                    1: {
-                        parts: [WORK, WORK, CARRY, MOVE]
-                    },
-                    2: {
-                        parts: [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE]
-                    }
+                    1: { parts: [WORK, WORK, CARRY, MOVE] },
+                    2: { parts: [WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE] },
+                    3: { parts: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE] },
+                    4: { parts: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE] }
                 }
             }
 
@@ -62,7 +73,7 @@ export class SpawnCreeps {
                             working: false
                         }
                     })) {
-                        console.log(`Spawning new ${role}: ${newName}`)
+                        console.log(`Spawning new Tier ${tier} ${role}: ${newName}. `)
                     }
                 }
             }

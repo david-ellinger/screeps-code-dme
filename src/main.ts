@@ -1,4 +1,5 @@
 import { CreepManager } from "roles/CreepManager";
+import { BuildingManager } from "structures/BuildingManager";
 import { ErrorMapper } from "utils/ErrorMapper";
 import { Miner } from './roles/Miner';
 
@@ -8,6 +9,10 @@ import { Miner } from './roles/Miner';
 export const loop = ErrorMapper.wrapLoop(() => {
   // INFO
   CreepManager.run();
+  for (const name in Game.rooms) {
+    const room = Game.rooms[name];
+    BuildingManager.run(room);
+  }
 
 
   // Automatically delete memory of missing creeps
