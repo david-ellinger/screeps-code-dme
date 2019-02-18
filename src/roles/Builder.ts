@@ -38,10 +38,10 @@ export class Builder {
     }
 
     public static factory() {
-        if (Game.spawns.Spawn1.room.energyAvailable >= 150) {
+        if (Game.spawns.Spawn1.room.energyAvailable >= 300) {
             const newName = 'Builder' + Game.time;
 
-            Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], newName,
+            Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE, WORK, CARRY, MOVE], newName,
                 { memory: { role: 'builder', source: getAvailableSource() } } as any);
             console.log(`Spawning new builder: ${newName}.`);
         }

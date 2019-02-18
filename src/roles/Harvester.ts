@@ -40,10 +40,10 @@ export class Harvester {
     }
 
     public static factory() {
-        if (Game.spawns.Spawn1.room.energyAvailable >= 150) {
+        if (Game.spawns.Spawn1.room.energyAvailable >= 300) {
             const newName = 'Harvester' + Game.time;
 
-            Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], newName,
+            Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE, WORK, CARRY, MOVE], newName,
                 { memory: { role: 'harvester', source: getAvailableSource() } } as any);
             console.log(`Spawning new harvester: ${newName}.`);
             ;
