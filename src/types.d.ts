@@ -5,8 +5,6 @@ interface CreepMemory {
   role: string;
   room: string;
   working: boolean;
-  source: string;
-  building: boolean;
 }
 
 interface Memory {

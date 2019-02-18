@@ -1,53 +1,36 @@
-import { getAvailableSource } from "utils/getAvailableSource";
-import { Harvester } from "./Harvester";
+import { CreepHelper } from "utils/CreepHelper";
 
 export class Builder {
     public static run(creep: Creep) {
-        if (creep.memory.building && creep.carry.energy === 0) {
-            creep.memory.building = false;
-            creep.say('🔄 harvest');
+        const constructionSite: ConstructionSite | null = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+        const source: Source | null = creep.pos.findClosestByPath(FIND_SOURCES)!;
+        const resource: Resource | null = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES, {
+            filter: r => r.amount > creep.carryCapacity - creep.carry.energy
+        });
+
+        if (creep.carry.energy === creep.carryCapacity) {
+            creep.memory.working = true;
         }
-        if (!creep.memory.building && creep.carry.energy === creep.carryCapacity) {
-            creep.memory.building = true;
-            creep.say('🚧 build');
+        if (creep.carry.energy === 0) {
+            creep.memory.working = false;
         }
 
-        if (creep.memory.building) {
-            Builder.transferEnergyToStructure(creep);
-        } else {
-            Harvester.harvestEnergy(creep);
-        }
-    }
-
-    public static transferEnergyToStructure(creep: Creep) {
-        const targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-        if (targets.length) {
-            if (creep.build(targets[0]) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(targets[0], { visualizePathStyle: { stroke: '##ffa500' } });
+        // Collect energy until you fill up, then go build.
+        if (creep.memory.working) {
+            if (constructionSite) {
+                CreepHelper.buildTo(creep, constructionSite);
             }
         } else {
-            const spawnOrExtension = creep.room.find(FIND_STRUCTURES, {
-                filter: (structure) => {
-                    return (structure.structureType === STRUCTURE_EXTENSION
-                        || structure.structureType === STRUCTURE_SPAWN) &&
-                        structure.energy < structure.energyCapacity;
-                }
-            });
-            if (spawnOrExtension.length > 0) {
-                if (creep.transfer(spawnOrExtension[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(spawnOrExtension[0], { visualizePathStyle: { stroke: '#ffa500' } });
-                }
+            if (resource) {
+                CreepHelper.pickupTo(creep, resource);
+            } else {
+                CreepHelper.harvestTo(creep, source);
             }
         }
-    }
 
-    public static factory() {
-        if (Game.spawns.Spawn1.room.energyAvailable >= 300) {
-            const newName = 'Builder' + Game.time;
-
-            Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], newName,
-                { memory: { role: 'builder', source: getAvailableSource() } } as any);
-            console.log(`Spawning new builder: ${newName}.`);
+        // If you are done, just suicide. A creep that needs energy will come pick up any dropped energy
+        if (!constructionSite) {
+            creep.suicide();
         }
     }
 }
