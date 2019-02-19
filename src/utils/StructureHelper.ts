@@ -7,6 +7,12 @@ export class StructureHelper {
         return room.find(FIND_SOURCES);
     }
 
+    public static damagedStructures(room: Room): Structure[] {
+        return room.find(FIND_MY_STRUCTURES, {
+            filter: structure => (structure.hits < structure.hitsMax)
+        })
+    }
+
     // find closest container/storage that has at least the amount of energy a creep needs
     public static closestContainerOrStorageForPickup(creep: Creep): StructureContainer | StructureStorage | null {
         const target = creep.pos.findClosestByPath(FIND_STRUCTURES, {

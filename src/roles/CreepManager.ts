@@ -2,6 +2,8 @@ import { SpawnCreeps } from 'spawn/SpawnCreeps';
 import { Builder } from './Builder';
 import { Hauler } from './Hauler';
 import { Miner } from './Miner';
+import { Repairer } from './Repairer';
+import { Upgrader } from './Upgrader';
 export class CreepManager {
 
     public static run() {
@@ -21,6 +23,12 @@ export class CreepManager {
                     break;
                 case "builder":
                     Builder.run(creep);
+                    break;
+                case "upgrader":
+                    Upgrader.run(creep);
+                    break;
+                case "repairer":
+                    Repairer.run(creep);
                     break;
             }
         };

@@ -9,6 +9,7 @@ export class SpawnCreeps {
     public static buildRoles(room: Room) {
         const constructionCount = StructureHelper.constructionSites(room).length;
         const sourceCount = StructureHelper.sources(room).length;
+        const damagedStructures = StructureHelper.damagedStructures(room).length;
         const roles = {
             builder: {
                 count: Math.ceil(constructionCount / 4),
@@ -42,6 +43,24 @@ export class SpawnCreeps {
             },
             miner: {
                 count: sourceCount,
+                tier: {
+                    1: { parts: [WORK, WORK, CARRY, MOVE] },
+                    2: { parts: [WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE] },
+                    3: { parts: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE] },
+                    4: { parts: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE] }
+                }
+            },
+            repairer: {
+                count: Math.ceil(damagedStructures / 10),
+                tier: {
+                    1: { parts: [WORK, WORK, CARRY, MOVE] },
+                    2: { parts: [WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE] },
+                    3: { parts: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE] },
+                    4: { parts: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE] }
+                }
+            },
+            upgrader: {
+                count: 3,
                 tier: {
                     1: { parts: [WORK, WORK, CARRY, MOVE] },
                     2: { parts: [WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE] },

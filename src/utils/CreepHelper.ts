@@ -27,6 +27,12 @@ export class CreepHelper {
         }
     }
 
+    public static repairTo(creep: Creep, structure: Structure) {
+        if (creep.repair(structure) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(structure);
+        }
+    }
+
     // upgrade a controller or move to that controller
     public static upgradeTo(creep: Creep, controller: StructureController) {
         if (creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {

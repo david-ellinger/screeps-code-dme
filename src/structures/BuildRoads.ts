@@ -14,17 +14,17 @@ export class BuildRoads {
             }
         });
         // Create Road to spawn
-        sources.forEach(source => {
-            spawns.forEach(spawn => {
-                const path: PathStep[] = this.findPath(source.pos, spawn.pos, room);
-                for (const loc of path) {
-                    if (room.createConstructionSite(loc.x, loc.y, STRUCTURE_ROAD) === 0) {
-                        console.log(`Creating road to spawn at: ${room.name}, ${loc.x}, ${loc.y}`);
-                    }
-                }
-            })
+        // sources.forEach(source => {
+        //     spawns.forEach(spawn => {
+        //         const path: PathStep[] = this.findPath(source.pos, spawn.pos, room);
+        //         for (const loc of path) {
+        //             if (room.createConstructionSite(loc.x, loc.y, STRUCTURE_ROAD) === 0) {
+        //                 console.log(`Creating road to spawn at: ${room.name}, ${loc.x}, ${loc.y}`);
+        //             }
+        //         }
+        //     })
 
-        });
+        // });
     }
 
     public static findPath(from: RoomPosition, to: RoomPosition, room: Room) {
