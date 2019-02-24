@@ -11,6 +11,16 @@ export class SpawnCreeps {
         const sourceCount = StructureHelper.sources(room).length;
         const damagedStructures = StructureHelper.damagedStructures(room).length;
         const roles = {
+            miner: {
+                count: sourceCount,
+                tier: {
+                    1: { parts: [WORK, WORK, CARRY, MOVE] },
+                    2: { parts: [WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE] },
+                    3: { parts: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE] },
+                    4: { parts: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE] }
+                }
+            },
+            // tslint:disable-next-line:object-literal-sort-keys
             builder: {
                 count: Math.ceil(constructionCount / 4),
                 tier: {
@@ -41,17 +51,8 @@ export class SpawnCreeps {
                     }
                 }
             },
-            miner: {
-                count: sourceCount,
-                tier: {
-                    1: { parts: [WORK, WORK, CARRY, MOVE] },
-                    2: { parts: [WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE] },
-                    3: { parts: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE] },
-                    4: { parts: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE] }
-                }
-            },
             repairer: {
-                count: Math.ceil(damagedStructures / 10),
+                count: 5,
                 tier: {
                     1: { parts: [WORK, WORK, CARRY, MOVE] },
                     2: { parts: [WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE] },
